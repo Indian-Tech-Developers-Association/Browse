@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrowseHere Smart Search</title>
+<link rel="icon" href="https://yt3.googleusercontent.com/JylmUBI82r5ZL3o-vpRSoEAFcLXLnao1bGu-31cnL8udVT-bjrRo3hxmBSruaNI6AtZqW__2=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #0052cc, #66b2ff);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* Card container */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 3rem auto;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+  }
+
+  /* Logo */
+  .logo {
+    max-width: 120px;
+    margin-bottom: 1rem;
+  }
+
+  /* Headings */
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 1rem;
+  }
+
+  /* Form labels */
+  label {
+    display: block;
+    text-align: left;
+    margin-top: 1rem;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* Inputs and selects */
+  input, select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  input:focus, select:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 6px rgba(255,102,0,0.3);
+  }
+
+  /* Buttons */
+  button {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.6rem 1.2rem;
+    font-size: 14px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  button:hover {
+    background-color: #e65c00;
+    transform: translateY(-2px);
+  }
+
+  /* Iframe */
+  iframe {
+    width: 100%;
+    height: 60vh;
+    border: none;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: auto;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    padding: 1rem 0;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    h2 { font-size: 18px; }
+    input, select, button { font-size: 13px; }
+    iframe { height: 50vh; }
+    .card { padding: 1.5rem; margin: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <img class="logo" src="https://yt3.googleusercontent.com/JylmUBI82r5ZL3o-vpRSoEAFcLXLnao1bGu-31cnL8udVT-bjrRo3hxmBSruaNI6AtZqW__2=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj" alt="Site Logo">
+    <h2>BrowseHere</h2>
+
+    <label for="query">Search</label>
+    <input id="query" type="text" placeholder="Enter search...">
+
+    <label for="engine">Select search engine</label>
+    <select id="engine">
+      <option value="https://www.bing.com/search?q=">Bing</option>
+    </select>
+
+    <button onclick="search(document.getElementById('query').value)">Search</button>
+
+    <iframe id="browserFrame"></iframe>
+  </div>
+
+  <footer>
+    Created by [VISHAL] [www.example.com]
+  </footer>
+
+<script>
+  function search(query) {
+    const engine = document.getElementById('engine').value;
+    const fullUrl = engine + encodeURIComponent(query);
+    document.getElementById('browserFrame').src = fullUrl;
+  }
+
+  window.addEventListener("message", (event) => {
+    if (event.data?.type === "search") {
+      document.getElementById("query").value = event.data.query;
+      search(event.data.query);
+    }
+  });
+</script>
+
+</body>
+</html>
